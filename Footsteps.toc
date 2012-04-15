@@ -4,3 +4,5 @@
 ## Author: Jiyambi, Taellis, Phaedra
 ## SavedVariables: FootstepsDB
 ## Version: 0.1
+
+Footsteps.lua

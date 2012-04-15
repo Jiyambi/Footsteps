@@ -1,0 +1,6 @@
+## Interface: 40300
+## Title: Footsteps
+## Notes: Tracks where you've been!
+## Author: Jiyambi, Taellis, Phaedra
+## SavedVariables: FootstepsDB
+## Version: 0.1

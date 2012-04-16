@@ -52,11 +52,21 @@ M:Initiallize() -- TODO: Move to central location
 M.Coords.Size = 0          -- Size of Queue
 M.Coords.First = 1         -- Index of first item in Queue
 M.Coords.Last = 0          -- Index of last item in Queue
+-------------------------------------------------------------------------------------
+-- M.Coords:Push()          Adds a coordinate at the front of the queue
+-- Arguments                Coordinate to be added
+-- Returns                  nil
+-------------------------------------------------------------------------------------
 function M.Coords:Push(value)
     self.Last = self.Last + 1
     self[self.Last] = value
     self.Size = self.Size+1
 end
+-------------------------------------------------------------------------------------
+-- M.Coords:Pop()           Removes the oldest coordinate from the queue
+-- Arguments                nil
+-- Returns                  Coordinate that was removed
+-------------------------------------------------------------------------------------
 function M.Coords:Pop()
     local first = self.First
     if first > self.Last then error("Coordinate queue empty") end
@@ -68,7 +78,7 @@ function M.Coords:Pop()
 end
 
 -------------------------------------------------------------------------------------
--- DropFootprints()         Adds a footprint to the array and bumps old ones out
+-- M:DropFootprints()       Adds a footprint to the array and bumps old ones out
 -- Arguments                elapsed - time since last called
 -- Returns                  nil
 -------------------------------------------------------------------------------------
@@ -103,16 +113,20 @@ function M:DropFootprints(elapsed)
 end
 
 -------------------------------------------------------------------------------------
--- DrawFootprints()         Draws current footprints to minimap
+-- M:DrawFootprints()       Draws current footprints to minimap
 -- Arguments                nil
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:DrawFootprints()
+    -- Get the position of the center of the minimap (player position)
+    -- For each coordinate
+        -- Calculate the coordinate relative to the player position
+        -- Move the marker to the correct location and make it visible
 end
 
 
 -------------------------------------------------------------------------------------
--- OnUpdate()               Drops footprints and draws them
+-- M:OnUpdate()             Drops footprints and draws them
 -- Arguments                elapsed
 -- Returns                  nil
 -------------------------------------------------------------------------------------

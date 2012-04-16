@@ -118,10 +118,21 @@ end
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:DrawFootprints()
+    
+    -- Process Minimap --
     -- Get the position of the center of the minimap (player position)
     -- For each coordinate
         -- Calculate the coordinate relative to the player position
         -- Move the marker to the correct location and make it visible
+    
+    -- Process Zone Map --
+    -- If the zone map is visible
+        -- Get the coordinates of the upper left corner
+        -- For each coordinate
+            -- If the coordinate is in this zone
+                -- Move a marker to the correct location and make it visible
+            -- If it's not in this zone
+                -- Make marker invisible
 end
 
 

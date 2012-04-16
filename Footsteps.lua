@@ -11,8 +11,6 @@
 -------------------------------------------------------------------------------------
 -- Initialization 
 -------------------------------------------------------------------------------------
-
--- General --
 Footsteps = {}                      -- Table to hold all addon data
 Footsteps.Version =                 -- The addon version defined in the ToC page
     GetAddOnMetadata("Footsteps", "Version")

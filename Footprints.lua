@@ -12,12 +12,23 @@
 -- Initialization 
 -------------------------------------------------------------------------------------
 Footsteps.Footprints = {}       -- Table for holding footprint related values 
-local F = Footsteps.Footprints  -- Localize this section for easy access
-F.Freq = 5                      -- Number of seconds between footprint drops
-F.Remembered = 5                -- Number of footprints the addon will remember
-F.Coords = {}                   -- Array to hold footprints
-F.Frames = {}                   -- Array to hold texture for footprints
-F.Timer = F.Freq     	        -- Timer for footprint drop
+local F = Footsteps.Footprints  -- Localize module table for easy access
+local REMEMBERED = 5            -- TODO: Store in db
+local FREQ = 5                  -- TODO: Store in db
+
+-------------------------------------------------------------------------------------
+-- Initiallize()            Initiallizes footprints module
+-- Arguments                nil
+-- Returns                  nil
+-------------------------------------------------------------------------------------
+function F:Initiallize()
+    F.Freq = FREQ                   -- Number of seconds between footprint drops
+    F.Remembered = REMEMBERED       -- Number of footprints the addon will remember
+    F.Coords = {}                   -- Array to hold footprints
+    F.Frames = {}                   -- Array to hold texture for footprints
+    F.Timer = F.Freq     	        -- Timer for footprint drop
+end
+F:Initiallize() -- TODO: Move to central location
     
 -------------------------------------------------------------------------------------
 -- Coords Queue-Array
@@ -69,8 +80,9 @@ function F:DropFootprints(elapsed)
     DEFAULT_CHAT_FRAME:AddMessage("Coord List:")
     for i = F.Coords.First, F.Coords.Last do
         coord = F.Coords[i]
-        DEFAULT_CHAT_FRAME:AddMessage(format("( %s ) %d,%d", coord.zone,coord.x*100,coord.y*100))
+        DEFAULT_CHAT_FRAME:AddMessage(
+            format("( %s ) %d,%d", coord.zone,coord.x*100,coord.y*100))
     end
 
 end
-Footsteps.Listener:SetScript("OnUpdate", F.DropFootprints)
+Footsteps.Listener:SetScript("OnUpdate", F.DropFootprints)  -- TODO: Move to central location

@@ -28,4 +28,4 @@ function Footsteps:CreateListener()
     Footsteps.Listener = CreateFrame("Button", "Footsteps.Listener", UIParent)
 	
 end
-Footsteps:CreateListener()
+Footsteps:CreateListener()  -- TODO: Move to central location

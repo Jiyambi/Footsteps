@@ -24,6 +24,7 @@ local SIZE = 5
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:Initiallize()
+    A:Debug(10,"func enter Footprints:Initiallize()")
     M.Freq = FREQ                   -- Number of seconds between footprint drops
     M.Remembered = REMEMBERED       -- Number of footprints the addon will remember
     M.Size = SIZE                   -- Size of the dropped footprints
@@ -41,9 +42,12 @@ function M:Initiallize()
         })
         frame:SetBackdropColor(0.2, 0.2, 0.2, 0.7)
         frame:SetPoint("CENTER", 0, 0)
+        frame:Hide()
         M.Frames[i] = frame
     end
+    A:Debug(10,"func exit Footprints:Initiallize()")
 end
+A:Debug(9,"func call Footprints:Initiallize()")
 M:Initiallize() -- TODO: Move to central location
     
 -------------------------------------------------------------------------------------
@@ -58,9 +62,11 @@ M.Coords.Last = 0          -- Index of last item in Queue
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M.Coords:Push(value)
+    A:Debug(10,format("func enter Footprints.Coords:Push() args {zone=%s, x=%f, y=%f}",value.zone, value.x, value.y))
     self.Last = self.Last + 1
     self[self.Last] = value
     self.Size = self.Size+1
+    A:Debug(10,"func exit Footprints.Coords:Push()")
 end
 -------------------------------------------------------------------------------------
 -- M.Coords:Pop()           Removes the oldest coordinate from the queue
@@ -68,12 +74,15 @@ end
 -- Returns                  Coordinate that was removed
 -------------------------------------------------------------------------------------
 function M.Coords:Pop()
+    A:Debug(10,"func enter Footprints.Coords:Pop()")
+    
     local first = self.First
     if first > self.Last then error("Coordinate queue empty") end
     local value = self[first]
     self[first] = nil
     self.First = first + 1
     self.Size = self.Size-1
+    A:Debug(10,format("func exit Footprints.Coords:Pop() return {zone=%s, x=%f, y=%f}",value.zone, value.x, value.y))
     return value
 end
 
@@ -83,6 +92,8 @@ end
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:DropFootprints(elapsed)
+    A:Debug(11,format("func enter Footprints:DropFootprints() args %f",elapsed))
+    
     -- Add the timesince last update to the timer
     M.Timer = M.Timer + elapsed	
     
@@ -103,13 +114,13 @@ function M:DropFootprints(elapsed)
     
     -- TODO: Remove
     -- Print the current coordinates to the chat window
-    DEFAULT_CHAT_FRAME:AddMessage("Coord List:")
+    A:Debug(1,"Coord List:")
     for i = M.Coords.First, M.Coords.Last do
         coord = M.Coords[i]
-        DEFAULT_CHAT_FRAME:AddMessage(
-            format("( %s ) %d,%d", coord.zone,coord.x*100,coord.y*100))
+        A:Debug(1,format("( %s ) %d,%d", coord.zone,coord.x*100,coord.y*100))
     end
 
+    A:Debug(11,"func exit Footprints:DropFootprints()")
 end
 
 -------------------------------------------------------------------------------------
@@ -118,9 +129,12 @@ end
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:DrawFootprints()
+    A:Debug(11,"func enter Footprints:DrawFootprints()")
     
     -- Process Minimap --
     -- Get the position of the center of the minimap (player position)
+	local x, y = Minimap:GetCenter()
+    A:Debug(10,format("local x,y = %f, %f",x,y))
     -- For each coordinate
         -- Calculate the coordinate relative to the player position
         -- Move the marker to the correct location and make it visible
@@ -133,6 +147,8 @@ function M:DrawFootprints()
                 -- Move a marker to the correct location and make it visible
             -- If it's not in this zone
                 -- Make marker invisible
+                
+    A:Debug(11,"func exit Footprints:DrawFootprints()")
 end
 
 
@@ -142,8 +158,10 @@ end
 -- Returns                  nil
 -------------------------------------------------------------------------------------
 function M:OnUpdate(elapsed)
+    A:Debug(11,format("func enter Footprints:OnUpdate() args %f",elapsed))
     M:DropFootprints(elapsed)
     M:DrawFootprints()
+    A:Debug(11,"func exit Footprints:OnUpdate() args %f")
 end
 
 A.Listener:SetScript("OnUpdate", M.OnUpdate)  -- TODO: Move to central location
